@@ -28,6 +28,7 @@ public class DatabaseEngine {
 		String result = null;
 		BufferedReader br = null;
 		InputStreamReader isr = null;
+		
 		try {
 			isr = new InputStreamReader(
                     this.getClass().getResourceAsStream(FILENAME));
@@ -36,10 +37,16 @@ public class DatabaseEngine {
 			
 			while (result == null && (sCurrentLine = br.readLine()) != null) {
 				String[] parts = sCurrentLine.split(":");
-				if (text.toLowerCase().equals(parts[0].toLowerCase())) {
-					result = parts[1];
+				int length=parts[0].length();
+				String temp=null;
+				for(int i=0; i<text.length()-length+1; i++) {
+					temp=text.substring(i, i+length);
+				if (temp.toLowerCase().equals(parts[0].toLowerCase())) {
+					result = parts[1]; 
+					break;
 				}
 			}
+		}
 		} catch (IOException e) {
 			log.info("IOException while reading file: {}", e.toString());
 		} finally {
