@@ -41,29 +41,27 @@ public class SQLDatabaseEngine extends DatabaseEngine {
 			}
 			
 			if (result != null) { return result;}
+			}
 				
 			
 			
-			String username="programmer";
-			String password="iamaprogrammer";
+			
 			String dbUrl="jdbc:postgresql://localhost:5432/data";
-			Connection connection=DriverManager.getConnection(dbUrl, username, password);
+			Connection connection=getConnection();
 
 			PreparedStatement stmt=connection.prepareStatement(
-					"SELECT keyword, response FROM data where keyword like concat('%', ?, '%')");
+					"SELECT * FROM data WHERE keyword like concat('%', ?, '%')");
 			
 			stmt.setString(1, text);
 			
 			ResultSet rs=stmt.executeQuery();
-			while (rs.next()) {
-				System.out.println(rs.getString(2)+ '\n');
-			}
+			result=rs.getString(2);
 			
 				
-				rs.close();
-				stmt.close();
-				connection.close();
-		}
+			rs.close();
+			stmt.close();
+			connection.close();
+		
 		} catch (IOException e) {
 			log.info("IOException while reading file: {}", e.toString());
 		} finally {
