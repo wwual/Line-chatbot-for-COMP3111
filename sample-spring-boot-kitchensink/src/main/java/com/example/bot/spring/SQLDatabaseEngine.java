@@ -23,7 +23,6 @@ public class SQLDatabaseEngine extends DatabaseEngine {
 		String sCurrentLine;
 		
 		
-		
 		try {
 			isr = new InputStreamReader(
                     this.getClass().getResourceAsStream(FILENAME));
