@@ -43,24 +43,19 @@ public class SQLDatabaseEngine extends DatabaseEngine {
 			if (result != null) { return result;}
 			}
 				
-			
-			
-			
-			String dbUrl="jdbc:postgresql://localhost:5432/data";
 			Connection connection=getConnection();
 
 			PreparedStatement stmt=connection.prepareStatement(
-					"SELECT * FROM data WHERE keyword like concat('%', ?, '%')");
+					"SELECT * FROM data where keyword like concat('%', ?, '%')");
 			
 			stmt.setString(1, text);
 			
 			ResultSet rs=stmt.executeQuery();
 			result=rs.getString(2);
-			
-				
 			rs.close();
 			stmt.close();
 			connection.close();
+			
 		
 		} catch (IOException e) {
 			log.info("IOException while reading file: {}", e.toString());
@@ -70,6 +65,7 @@ public class SQLDatabaseEngine extends DatabaseEngine {
 					br.close();
 				if (isr != null)
 					isr.close();
+				
 				
 			} catch (IOException ex) {
 				log.info("IOException while closing file: {}", ex.toString());
