@@ -98,4 +98,16 @@ public class KitchenSinkTester {
 		assertThat(!thrown);
 		assertThat(result.equals("Fine, thanks"));
 	}
+	@Test
+	public void testFound4() throws Exception {
+		boolean thrown = false;
+		String result = null;
+		try {
+			result = this.databaseEngine.search("Are you alright?");
+		} catch (Exception e) {
+			thrown = true;
+		}
+		assertThat(!thrown);
+		assertThat(result.equals("Yeah, I am OK."));
+	}
 }

@@ -21,44 +21,31 @@ public class SQLDatabaseEngine extends DatabaseEngine {
 		BufferedReader br = null;
 		InputStreamReader isr = null;
 		String sCurrentLine;
-		
-		
+		boolean exist=true;
+		try{result=super.search(text);
+				}catch(Exception e){exist=false;}
+		if(exist){return result;}
+		else {
 		try {
-			isr = new InputStreamReader(
-                    this.getClass().getResourceAsStream(FILENAME));
-			br = new BufferedReader(isr);
-			
-			while (result == null && (sCurrentLine = br.readLine()) != null) {
-				String[] parts = sCurrentLine.split(":");
-				int length=parts[0].length();
-				String temp=null;
-				for(int i=0; i<text.length()-length+1; i++) {
-					temp=text.substring(i, i+length);
-				if (temp.toLowerCase().equals(parts[0].toLowerCase())) {
-					result = parts[1]; 
-					break;
-				}
-			}
-			
-			if (result != null) { return result;}
-			}
 				
 			Connection connection=getConnection();
 
 			PreparedStatement stmt=connection.prepareStatement(
-					"SELECT response FROM data WHERE keyword like('%', ?, '%')");
+					"SELECT response FROM data WHERE keyword like concat('%', ?, '%')");
 			
 				
 			stmt.setString(1, text);
 			ResultSet rs=stmt.executeQuery();
+			rs.next();
 			result=rs.getString(1);
 			rs.close();
 			stmt.close();
 			connection.close();
 			
 		
-		} catch (IOException e) {
-			log.info("IOException while reading file: {}", e.toString());
+		
+		}	catch (Exception e) {
+			log.info("Exception while reading file: {}", e.toString());
 		} finally {
 			try {
 				if (br != null)
@@ -71,13 +58,16 @@ public class SQLDatabaseEngine extends DatabaseEngine {
 				log.info("IOException while closing file: {}", ex.toString());
 			}
 		}
+		}
 		if (result != null)
 			return result;
 		
 		throw new Exception("NOT FOUND");
     }
 	
+	
 	private final String FILENAME = "/static/database.txt";
+	
 
 
 	
