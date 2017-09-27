@@ -17,10 +17,7 @@ import java.net.URI;
 public class SQLDatabaseEngine extends DatabaseEngine {
 	@Override
 	public String search(String text) throws Exception {
-		String result = null;
-		BufferedReader br = null;
-		InputStreamReader isr = null;
-		String sCurrentLine;
+		String result=null;
 		boolean exist=true;
 		try{result=super.search(text);
 				}catch(Exception e){exist=false;}
@@ -46,18 +43,7 @@ public class SQLDatabaseEngine extends DatabaseEngine {
 		
 		}	catch (Exception e) {
 			log.info("Exception while reading file: {}", e.toString());
-		} finally {
-			try {
-				if (br != null)
-					br.close();
-				if (isr != null)
-					isr.close();
-				
-				
-			} catch (IOException ex) {
-				log.info("IOException while closing file: {}", ex.toString());
-			}
-		}
+		} 
 		}
 		if (result != null)
 			return result;
