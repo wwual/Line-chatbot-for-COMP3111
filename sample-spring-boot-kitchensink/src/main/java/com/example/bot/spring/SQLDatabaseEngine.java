@@ -47,7 +47,7 @@ public class SQLDatabaseEngine extends DatabaseEngine {
 			rs2.next();
 			result=rs.getString(1);
 			int resultCount=rs2.getInt(1);
-			result=result+ "You had called this sentece for" + resultCount + "times.";
+			result=result+ "  You had hit this sentece for " + resultCount + " times.";
 			rs.close();
 			rs2.close();
 			stmt.close();

@@ -96,7 +96,7 @@ public class KitchenSinkTester {
 			thrown = true;
 		}
 		assertThat(!thrown);
-		assertThat(result.equals("Fine, thanks"));
+		assertThat(result.contains("Fine, thanks"));
 	}
 	@Test
 	public void testFound4() throws Exception {
