@@ -30,13 +30,29 @@ public class SQLDatabaseEngine extends DatabaseEngine {
 			PreparedStatement stmt=connection.prepareStatement(
 					"SELECT response FROM data WHERE keyword like concat('%', ?, '%')");
 			
+			PreparedStatement stmt2=connection.prepareStatement(
+					"UPDATE count SET times = times+1 WHERE keyword like concat('%', ?, '%')");
+			
+			PreparedStatement stmt3=connection.prepareStatement(
+					"SELECT times FROM count WHERE keyword like concat('%', ?, '%')");
+			
 				
 			stmt.setString(1, text);
+			stmt2.setString(1, text);
+			stmt3.setString(1, text);
 			ResultSet rs=stmt.executeQuery();
+			stmt2.executeUpdate();
+			ResultSet rs2=stmt3.executeQuery();
 			rs.next();
+			rs2.next();
 			result=rs.getString(1);
+			int resultCount=rs2.getInt(1);
+			result=result+ "You had called this sentece for" + resultCount + "times.";
 			rs.close();
+			rs2.close();
 			stmt.close();
+			stmt2.close();
+			stmt3.close();
 			connection.close();
 			
 		
